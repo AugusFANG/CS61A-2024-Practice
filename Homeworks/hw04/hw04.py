@@ -21,6 +21,16 @@ def deep_map(f, s):
     True
     """
     "*** YOUR CODE HERE ***"
+    def helper(l):
+        for i in range(len(l)):
+            if type(l[i]) == list:
+                l[i] = helper(l[i])
+            else:
+                l[i] = f(l[i])
+        return l
+    helper(s)
+
+
 
 
 HW_SOURCE_FILE=__file__
@@ -69,11 +79,13 @@ def planet(mass):
     """Construct a planet of some mass."""
     assert mass > 0
     "*** YOUR CODE HERE ***"
+    return ['planet', mass]
 
 def mass(p):
     """Select the mass of a planet."""
     assert is_planet(p), 'must call mass on a planet'
     "*** YOUR CODE HERE ***"
+    return p[1]
 
 def is_planet(p):
     """Whether p is a planet."""
@@ -126,6 +138,12 @@ def balanced(m):
     True
     """
     "*** YOUR CODE HERE ***"
+    if(is_planet(m)):
+        return True
+    else:
+        l = length(left(m)) * total_mass(end(left(m)))
+        r = length(right(m)) * total_mass(end(right(m)))
+        return l == r and balanced(end(left(m))) and balanced(end(right(m)))
 
 
 HW_SOURCE_FILE=__file__
@@ -141,6 +159,17 @@ def max_path_sum(t):
     17
     """
     "*** YOUR CODE HERE ***"
+    if not is_tree(t):
+        return 0
+    elif is_leaf(t):
+        return label(t)
+    else:
+        record = 0
+        for i in branches(t):
+            new = label(t) + max_path_sum(i)
+            if  new > record:
+                record = new
+        return record
 
 
 
